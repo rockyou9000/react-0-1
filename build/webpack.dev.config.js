@@ -33,7 +33,7 @@ module.exports = merge(config, {
       },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: "file-loader"
+        loader: 'file-loader'
       }
     ]
   },
@@ -57,14 +57,14 @@ module.exports = merge(config, {
     compress: true,
     historyApiFallback: true,
     port: 9999,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     hot: true,
     open: true,
     proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        pathRewrite: { "^/api": "" }
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' }
       }
     }
-  },
+  }
 })

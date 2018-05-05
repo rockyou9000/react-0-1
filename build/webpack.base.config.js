@@ -10,6 +10,6 @@ module.exports = {
     publicPath: '/'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.less', '.css']
+    extensions: ['.js', '.jsx', '.less', '.scss', '.css']
   }
 }
