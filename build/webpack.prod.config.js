@@ -7,10 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(config, {
-  entry: [
-    require.resolve('./polyfills'),
-    './index.js'
-  ],
+  entry: [require.resolve('./polyfills'), './index.js'],
   output: {
     filename: '[name].[chunkhash:8].js',
     chunkFilename: '[id].[chunkhash:8].js'
@@ -24,81 +21,75 @@ module.exports = merge(config, {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract(
-          {
-            fallback: {
-              loader: require.resolve('style-loader'),
+        use: ExtractTextPlugin.extract({
+          fallback: {
+            loader: require.resolve('style-loader'),
+            options: {
+              hmr: false
+            }
+          },
+          use: [
+            {
+              loader: require.resolve('css-loader'),
               options: {
-                hmr: false,
-              },
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: false
+              }
             },
-            use: [
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  minimize: true,
-                  sourceMap: false,
-                },
-              },
-              postcssConfig
-            ],
-          }
-        )
+            postcssConfig
+          ]
+        })
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract(
-          {
-            fallback: {
-              loader: require.resolve('style-loader'),
-              options: {
-                hmr: false,
-              },
-            },
-            use: [
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  minimize: true,
-                  sourceMap: false,
-                },
-              },
-              postcssConfig,
-              {
-                loader: require.resolve('less-loader')
-              }
-            ],
+        use: ExtractTextPlugin.extract({
+          fallback: {
+            loader: require.resolve('style-loader'),
+            options: {
+              hmr: false
+            }
           },
-        )
+          use: [
+            {
+              loader: require.resolve('css-loader'),
+              options: {
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: false
+              }
+            },
+            postcssConfig,
+            {
+              loader: require.resolve('less-loader')
+            }
+          ]
+        })
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract(
-          {
-            fallback: {
-              loader: require.resolve('style-loader'),
+        use: ExtractTextPlugin.extract({
+          fallback: {
+            loader: require.resolve('style-loader'),
+            options: {
+              hmr: false
+            }
+          },
+          use: [
+            {
+              loader: require.resolve('css-loader'),
               options: {
-                hmr: false,
-              },
-            },
-            use: [
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  minimize: true,
-                  sourceMap: false,
-                },
-              },
-              postcssConfig,
-              {
-                loader: 'scss-loader'
+                importLoaders: 1,
+                minimize: true,
+                sourceMap: false
               }
-            ],
-          }
-        )
+            },
+            postcssConfig,
+            {
+              loader: 'scss-loader'
+            }
+          ]
+        })
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -148,13 +139,11 @@ module.exports = merge(config, {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: function (module, count) {
+      minChunks: function(module, count) {
         return (
           module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
-          ) === 0
+          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
         )
       }
     }),
