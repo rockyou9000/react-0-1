@@ -1,11 +1,16 @@
 const webpack = require('webpack')
 const path = require('path')
+const postcssConfig = require('./commonConfig').postCss
 const merge = require('webpack-merge')
 const config = require('./webpack.base.config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(config, {
+  entry: [
+    require.resolve('./polyfills'),
+    './index.js'
+  ],
   output: {
     filename: '[name].[chunkhash:8].js',
     chunkFilename: '[id].[chunkhash:8].js'
@@ -19,24 +24,81 @@ module.exports = merge(config, {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: ExtractTextPlugin.extract(
+          {
+            fallback: {
+              loader: require.resolve('style-loader'),
+              options: {
+                hmr: false,
+              },
+            },
+            use: [
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  minimize: true,
+                  sourceMap: false,
+                },
+              },
+              postcssConfig
+            ],
+          }
+        )
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'less-loader']
-        })
+        use: ExtractTextPlugin.extract(
+          {
+            fallback: {
+              loader: require.resolve('style-loader'),
+              options: {
+                hmr: false,
+              },
+            },
+            use: [
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  minimize: true,
+                  sourceMap: false,
+                },
+              },
+              postcssConfig,
+              {
+                loader: require.resolve('less-loader')
+              }
+            ],
+          },
+        )
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: ExtractTextPlugin.extract(
+          {
+            fallback: {
+              loader: require.resolve('style-loader'),
+              options: {
+                hmr: false,
+              },
+            },
+            use: [
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  minimize: true,
+                  sourceMap: false,
+                },
+              },
+              postcssConfig,
+              {
+                loader: 'scss-loader'
+              }
+            ],
+          }
+        )
       },
       {
         test: /\.(png|jpg|gif)$/,
