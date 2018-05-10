@@ -10,15 +10,15 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Link to='/'>home</Link>
-        <Link to='/done'>done</Link>
-        <Link to='/undo'>undo</Link>
+        <Link to="/">home</Link>
+        <Link to="/done">done</Link>
+        <Link to="/undo">undo</Link>
         <Counter />
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/done' component={Done} />
-          <Route path='/done' component={Done} />
-          <Route path='/undo' component={Undo} />
+          <Route path="/" exact component={Home} />
+          <Route path="/done" component={Done} />
+          <Route path="/done" component={Done} />
+          <Route path="/undo" component={Undo} />
         </Switch>
       </div>
     )
