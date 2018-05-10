@@ -5,7 +5,7 @@ const config = require('./webpack.base.config')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(config, {
-  entry: [require.resolve('./polyfills'), './index.js'],
+  entry: [require.resolve('./polyfills'), './src/index.js'],
   module: {
     rules: [
       {

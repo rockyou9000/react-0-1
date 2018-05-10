@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(config, {
-  entry: [require.resolve('./polyfills'), './index.js'],
+  entry: [require.resolve('./polyfills'), './src/index.js'],
   output: {
     filename: '[name].[chunkhash:8].js',
     chunkFilename: '[id].[chunkhash:8].js'
